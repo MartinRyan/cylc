@@ -12,7 +12,7 @@
 """
 import re
 
-from jinja2 import nodes
+from jinja2 import nodes, select_autoescape
 from jinja2.defaults import BLOCK_START_STRING, \
      BLOCK_END_STRING, VARIABLE_START_STRING, VARIABLE_END_STRING, \
      COMMENT_START_STRING, COMMENT_END_STRING, LINE_STATEMENT_PREFIX, \
@@ -595,6 +595,8 @@ def babel_extract(fileobj, keywords, comment_tags, options):
         NEWLINE_SEQUENCE,
         getbool(options, 'keep_trailing_newline', KEEP_TRAILING_NEWLINE),
         frozenset(extensions),
+        autoescape=select_autoescape(enabled_extensions=(
+            'html', 'xml'), default_for_string=True),
         cache_size=0,
         auto_reload=False
     )

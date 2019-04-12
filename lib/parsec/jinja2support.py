@@ -31,6 +31,7 @@ from jinja2 import (
     ChoiceLoader,
     Environment,
     FileSystemLoader,
+    select_autoescape,
     StrictUndefined,
     TemplateNotFound,
     TemplateSyntaxError)
@@ -104,6 +105,8 @@ def jinja2environment(dir_=None):
         dir_ = os.getcwd()
 
     env = Environment(
+        autoescape=select_autoescape(enabled_extensions=(
+            'html', 'xml'), default_for_string=True),
         loader=ChoiceLoader([FileSystemLoader(dir_), PyModuleLoader()]),
         undefined=StrictUndefined,
         extensions=['jinja2.ext.do'])
